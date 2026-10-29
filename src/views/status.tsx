@@ -1,6 +1,13 @@
+import type { JobStatus } from '../digest/types.js';
 import type { Status } from '../status.js';
 
-export function StatusBoard({ status }: { status: Status }) {
+export function StatusBoard({
+  status,
+  counts = {},
+}: {
+  status: Status;
+  counts?: Record<string, Record<JobStatus, number>>;
+}) {
   return (
     <>
       <h1>status</h1>
@@ -20,7 +27,12 @@ export function StatusBoard({ status }: { status: Status }) {
       ) : (
         <ul>
           {status.nights.map((n) => (
-            <li>{n}</li>
+            <li>
+              <a href={`/digest/${n}`}>{n}</a>
+              {counts[n] ? (
+                <span class="mute"> · ok {counts[n].ok} · retry {counts[n].retry} · fail {counts[n].fail}</span>
+              ) : null}
+            </li>
           ))}
         </ul>
       )}
