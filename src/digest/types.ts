@@ -16,6 +16,7 @@ export type Night = {
   night: string;
   rows: DigestRow[];
   badLines: number;
+  counts: Record<JobStatus, number>;
 };
 
 // Returns null when runs/<night>.jsonl does not exist. Lines that do not parse are counted in
